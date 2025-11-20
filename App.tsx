@@ -12,7 +12,7 @@ import { Footer } from './components/Footer';
 
 function App() {
   return (
-    <div className="min-h-screen bg-brand-bg text-brand-text selection:bg-brand-accent/20 selection:text-brand-text font-sans antialiased">
+    <div className="min-h-screen bg-slate-950 text-white selection:bg-blue-500/30 selection:text-blue-200 font-sans antialiased">
       <Navbar />
       <Hero />
       <SocialProof />

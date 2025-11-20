@@ -9,30 +9,30 @@ const ModeCard: React.FC<{
     widget: React.ReactNode;
     delay: number;
 }> = ({ title, subtitle, description, widget, delay }) => (
-    <div className="flex-1 bg-white rounded-3xl p-2 shadow-soft border border-gray-100 hover:shadow-lg hover:border-brand-lavender transition-all duration-500 group flex flex-col h-full">
-        <div className="bg-brand-bg rounded-2xl p-8 flex items-center justify-center h-[300px] overflow-hidden relative group-hover:bg-gradient-to-b from-brand-bg to-white transition-colors">
+    <div className="flex-1 bg-white/5 rounded-3xl p-2 shadow-lg border border-white/5 hover:shadow-xl hover:border-white/10 transition-all duration-500 group flex flex-col h-full">
+        <div className="bg-white/5 rounded-2xl p-8 flex items-center justify-center h-[300px] overflow-hidden relative group-hover:bg-white/10 transition-colors">
              {/* Widget Wrapper with hover lift */}
              <div className="transform group-hover:-translate-y-2 transition-transform duration-500 ease-out">
                 {widget}
              </div>
         </div>
         <div className="p-8 flex-1 flex flex-col">
-            <div className="text-xs font-semibold text-brand-accent uppercase tracking-wider mb-2">{subtitle}</div>
-            <h3 className="text-2xl font-serif text-brand-text mb-3">{title}</h3>
-            <p className="text-sm text-gray-500 leading-relaxed mb-6">{description}</p>
+            <div className="text-xs font-semibold text-blue-300 uppercase tracking-wider mb-2">{subtitle}</div>
+            <h3 className="text-2xl font-serif text-white mb-3">{title}</h3>
+            <p className="text-sm text-blue-100/60 leading-relaxed mb-6">{description}</p>
         </div>
     </div>
 );
 
 export const ModesSection: React.FC = () => {
   return (
-    <section className="py-24 bg-brand-bg" id="features">
+    <section className="py-24 bg-slate-950" id="features">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         
         <div className="text-center mb-20">
             <ScrollReveal>
-                <h2 className="text-4xl font-serif text-brand-text mb-4">A complete ecosystem for your mind.</h2>
-                <p className="text-gray-500">Different thoughts need different shapes. Quillio adapts to you.</p>
+                <h2 className="text-4xl font-serif text-white mb-4">A complete ecosystem for your mind.</h2>
+                <p className="text-blue-100/60">Different thoughts need different shapes. Quillio adapts to you.</p>
             </ScrollReveal>
         </div>
 
