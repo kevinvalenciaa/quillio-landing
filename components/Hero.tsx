@@ -1,8 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollReveal } from './ui/ScrollReveal';
-import { Play, ArrowRight, Star } from 'lucide-react';
+import { Play } from 'lucide-react';
+
+const TESTIMONIALS = [
+  {
+    name: 'Elena Mora',
+    role: 'Founder, Crescent Studio',
+    quote: "I didn't need another productivity tool, I needed calm to think and make decisions. Quillio gave me that pause button."
+  },
+  {
+    name: 'Marcus Lee',
+    role: 'CEO, Northwind Labs',
+    quote: 'Quillio remembers the threads between my board updates and daily standups. It has become my quiet chief of staff.'
+  },
+  {
+    name: 'Priya Nair',
+    role: 'Product Lead, Lumen',
+    quote: 'It mirrors back the emotional patterns hiding in my notes. That perspective keeps our roadmap grounded in reality.'
+  }
+];
+const TESTIMONIAL_DURATION = 8000;
 
 export const Hero: React.FC = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const tick = 60;
+    const increment = (100 * tick) / TESTIMONIAL_DURATION;
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        const next = prev + increment;
+        if (next >= 100) {
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % TESTIMONIALS.length);
+          return 0;
+        }
+        return next;
+      });
+    }, tick);
+    return () => clearInterval(interval);
+  }, []);
+
+  const currentTestimonial = TESTIMONIALS[currentIndex];
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-slate-900">
       
@@ -32,20 +72,20 @@ export const Hero: React.FC = () => {
             <div className="hidden lg:flex flex-col gap-16 col-span-3 text-left pt-20">
                 <ScrollReveal delay={0.4}>
                     <div className="space-y-1">
-                        <div className="text-3xl font-serif text-white">1.2K+</div>
-                        <div className="text-sm text-blue-100/70 font-light leading-relaxed">founders practicing<br/>daily reflection</div>
+                        <div className="text-3xl font-serif text-white">41%</div>
+                        <div className="text-sm text-blue-100/70 font-light leading-relaxed">drop in perceived stress<br/>after reflective sessions</div>
                     </div>
                 </ScrollReveal>
                 <ScrollReveal delay={0.5}>
                      <div className="space-y-1">
-                        <div className="text-3xl font-serif text-white">40+</div>
-                        <div className="text-sm text-blue-100/70 font-light leading-relaxed">startup teams in<br/>early access</div>
+                        <div className="text-3xl font-serif text-white">10+</div>
+                        <div className="text-sm text-blue-100/70 font-light leading-relaxed">founders in<br/>early access</div>
                     </div>
                 </ScrollReveal>
                  <ScrollReveal delay={0.6}>
                      <div className="space-y-1">
-                        <div className="text-3xl font-serif text-white">76%</div>
-                        <div className="text-sm text-blue-100/70 font-light leading-relaxed">report better<br/>decision-making</div>
+                        <div className="text-3xl font-serif text-white">65%</div>
+                        <div className="text-sm text-blue-100/70 font-light leading-relaxed">report higher clarity<br/>in long-term planning</div>
                     </div>
                 </ScrollReveal>
             </div>
@@ -55,7 +95,7 @@ export const Hero: React.FC = () => {
                  <ScrollReveal>
                     <div className="inline-flex items-center gap-3 mb-8">
                         <span className="h-px w-12 bg-white/20"></span>
-                        <span className="text-[11px] font-bold text-blue-100/80 uppercase tracking-[0.25em] font-sans">The calm between decisions</span>
+                        <span className="text-[11px] font-bold text-blue-100/80 uppercase tracking-[0.25em] font-sans">clarity between decisions</span>
                         <span className="h-px w-12 bg-white/20"></span>
                     </div>
                 </ScrollReveal>
@@ -75,13 +115,13 @@ export const Hero: React.FC = () => {
                 <ScrollReveal delay={0.3}>
                     <div className="flex flex-col sm:flex-row gap-5 justify-center w-full mb-16">
                         <button className="px-8 py-4 text-sm font-semibold text-slate-900 bg-white rounded-full hover:bg-blue-50 transition-all transform hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center justify-center gap-2">
-                            Start a 3-minute reflection
+                            join the waitlist
                         </button>
                         <button className="px-8 py-4 text-sm font-semibold text-white bg-white/10 backdrop-blur-md border border-white/20 rounded-full hover:bg-white/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 group">
                             <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
                                  <Play size={10} fill="currentColor" className="ml-0.5 text-white"/>
                             </div>
-                            See how it works
+                            see how it works
                         </button>
                     </div>
                 </ScrollReveal>
@@ -89,31 +129,36 @@ export const Hero: React.FC = () => {
 
             {/* Right Column: Testimonial (Visible on LG) */}
             <div className="hidden lg:flex col-span-3 pt-20 justify-end lg:translate-x-12">
-                <ScrollReveal delay={0.7} className="w-full max-w-[280px]">
+                <ScrollReveal delay={0.7} className="w-full max-w-[320px]">
                     <div className="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-3xl text-left relative overflow-hidden group cursor-default transition-colors hover:bg-white/15">
-                        <div className="absolute top-0 right-0 p-6 opacity-50 group-hover:opacity-100 transition-opacity">
-                             <ArrowRight size={16} className="text-white -rotate-45" />
+                        <div className="absolute top-0 left-0 right-0 h-0.5 bg-white/10">
+                            <div
+                                className="h-full bg-white transition-all duration-200 ease-linear"
+                                style={{ width: `${progress}%` }}
+                            />
                         </div>
-
-                        <div className="flex -space-x-3 mb-6">
+                        <div className="flex -space-x-3 mb-6 mt-3">
                             <div className="w-10 h-10 rounded-full bg-blue-100 border-2 border-white/10" />
                             <div className="w-10 h-10 rounded-full bg-indigo-200 border-2 border-white/10" />
                             <div className="w-10 h-10 rounded-full bg-purple-200 border-2 border-white/10" />
                         </div>
 
                         <div className="mb-4">
-                            <h4 className="text-white font-medium">Elena Mora</h4>
-                            <p className="text-xs text-blue-200 uppercase tracking-wider mt-1">Founder, Crescent Studio</p>
+                            <h4 className="text-white font-medium">{currentTestimonial.name}</h4>
+                            <p className="text-xs text-blue-200 uppercase tracking-wider mt-1">{currentTestimonial.role}</p>
                         </div>
 
-                        <p className="text-sm text-blue-100/90 leading-relaxed italic opacity-90">
-                            "I didn't need another productivity tool, I needed calm to think and make decisions. Quillio gave me that pause button."
+                        <p className="text-sm text-blue-100/90 leading-relaxed italic opacity-90 transition-opacity duration-500">
+                            “{currentTestimonial.quote}”
                         </p>
                         
                         <div className="flex gap-1 mt-4 text-white/60">
-                            <div className="w-1.5 h-1.5 rounded-full bg-white"></div>
-                            <div className="w-1.5 h-1.5 rounded-full bg-white/30"></div>
-                            <div className="w-1.5 h-1.5 rounded-full bg-white/30"></div>
+                            {TESTIMONIALS.map((_, index) => (
+                                <div
+                                    key={index}
+                                    className={`w-1.5 h-1.5 rounded-full ${index === currentIndex ? 'bg-white' : 'bg-white/30'}`}
+                                ></div>
+                            ))}
                         </div>
                     </div>
                 </ScrollReveal>
@@ -140,7 +185,7 @@ export const Hero: React.FC = () => {
         {/* Bottom Footer Text */}
         <div className="absolute bottom-8 left-0 right-0 text-center">
              <p className="text-[10px] font-medium text-white/40 uppercase tracking-widest">
-                Created for moments between ambition and awareness
+                Created for clarity in thought leadership
              </p>
         </div>
       </div>
