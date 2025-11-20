@@ -25,25 +25,11 @@ export const Navbar: React.FC = () => {
             <div className="text-white">
                 <Feather className="w-5 h-5" strokeWidth={2} />
             </div>
-            <span className="text-lg font-serif font-medium tracking-tight text-white">Quillio</span>
+            <span className="text-lg font-serif font-medium tracking-tight text-white">quillio</span>
         </div>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-blue-100/70">
-          <a href="#philosophy" className="hover:text-white transition-colors">Philosophy</a>
-          <a href="#features" className="hover:text-white transition-colors">Modes</a>
-          <a href="#privacy" className="hover:text-white transition-colors">Privacy</a>
-        </div>
-
-        {/* Actions */}
-        <div className="hidden md:flex items-center gap-3">
-          <button className="px-5 py-2 text-xs font-medium text-white bg-transparent border border-white/10 rounded-full hover:bg-white/5 transition-all">
-            Sign In
-          </button>
-          <button className="px-5 py-2 text-xs font-medium text-slate-900 bg-white rounded-full hover:bg-blue-50 transition-all shadow-[0_0_15px_rgba(255,255,255,0.2)] hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-            Get Started
-          </button>
-        </div>
+        {/* Desktop Links removed */}
+        {/* Desktop Actions removed */}
 
         {/* Mobile Toggle */}
         <button 
