@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollReveal } from './ui/ScrollReveal';
-import { Play } from 'lucide-react';
+import { Play, ArrowRight } from 'lucide-react';
 
 const TESTIMONIALS = [
   {
@@ -117,15 +117,25 @@ export const Hero: React.FC = () => {
 
                 <ScrollReveal delay={0.3}>
                     <div className="flex flex-col sm:flex-row gap-5 justify-center w-full mb-16">
-                        <button className="px-8 py-4 text-sm font-semibold text-slate-900 bg-white rounded-full hover:bg-blue-50 transition-all transform hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center justify-center gap-2">
-                            join the waitlist
-                        </button>
+                        <form className="flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full p-1.5 pr-2 w-full max-w-md hover:bg-white/15 transition-colors group focus-within:bg-white/20 focus-within:border-white/30 shadow-lg shadow-black/10">
+                            <input 
+                                type="email" 
+                                placeholder="Enter your email..." 
+                                className="bg-transparent border-none text-white placeholder:text-blue-100/50 px-6 py-3 flex-1 outline-none text-sm font-medium w-full"
+                            />
+                            <button className="px-6 py-3 text-sm font-semibold text-white bg-white/10 border border-white/10 rounded-full hover:bg-white/20 transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm">
+                                Join Waitlist
+                            </button>
+                        </form>
+                    
+                        {/* 
                         <button className="px-8 py-4 text-sm font-semibold text-white bg-white/10 backdrop-blur-md border border-white/20 rounded-full hover:bg-white/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 group">
                             <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
                                  <Play size={10} fill="currentColor" className="ml-0.5 text-white"/>
                             </div>
                             see how it works
                         </button>
+                         */}
                     </div>
                 </ScrollReveal>
             </div>
