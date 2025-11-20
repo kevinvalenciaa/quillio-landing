@@ -31,17 +31,17 @@ export const Navbar: React.FC = () => {
         {/* Desktop Links removed */}
         {/* Desktop Actions removed */}
 
-        {/* Mobile Toggle */}
-        <button 
+        {/* Mobile Toggle removed since links are gone */}
+        {/* <button 
           className="md:hidden p-2 text-white/70"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        </button> */}
       </div>
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
+      {/* Mobile Menu removed */}
+      {/* {mobileMenuOpen && (
         <div className="absolute top-full left-0 right-0 bg-slate-900 border-b border-white/10 p-6 md:hidden flex flex-col gap-4 shadow-xl animate-in fade-in slide-in-from-top-5">
           <a href="#" className="text-base font-serif text-white py-2 border-b border-white/10">Philosophy</a>
           <a href="#" className="text-base font-serif text-white py-2 border-b border-white/10">Modes</a>
@@ -55,7 +55,7 @@ export const Navbar: React.FC = () => {
             </button>
           </div>
         </div>
-      )}
+      )} */}
     </nav>
   );
 };

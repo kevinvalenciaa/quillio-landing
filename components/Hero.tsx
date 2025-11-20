@@ -46,8 +46,32 @@ export const Hero: React.FC = () => {
 
   const currentTestimonial = TESTIMONIALS[currentIndex];
 
+  const handleJoinWaitlist = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const email = formData.get('email');
+  
+    try {
+        const res = await fetch('/api/waitlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email }),
+        });
+    
+        if (res.ok) {
+            form.reset();
+            alert("Thanks for joining! We'll be in touch.");
+        } else {
+            alert("Something went wrong. Please try again.");
+        }
+    } catch (e) {
+        alert("Something went wrong. Please try again.");
+    }
+  };
+
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-slate-900">
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-slate-900 pb-12 pt-24 lg:pt-0 lg:pb-0">
       
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
@@ -68,7 +92,7 @@ export const Hero: React.FC = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1600px] h-[1600px] border border-white/5 rounded-full pointer-events-none z-0"></div>
 
       {/* Content Grid */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full pt-24 lg:pt-0">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full lg:pt-0">
         <div className="grid lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Column: Stats (Visible on LG) */}
@@ -104,7 +128,7 @@ export const Hero: React.FC = () => {
                 </ScrollReveal>
 
                 <ScrollReveal delay={0.1}>
-                    <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif font-medium text-white mb-8 leading-[1.1] tracking-tight text-balance drop-shadow-sm">
+                    <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-medium text-white mb-8 leading-[1.1] tracking-tight text-balance drop-shadow-sm">
                     Make better decisions with an AI that <span className="italic text-blue-200/90 font-serif">remembers</span> your life.
                     </h1>
                 </ScrollReveal>
@@ -117,31 +141,24 @@ export const Hero: React.FC = () => {
 
                 <ScrollReveal delay={0.3}>
                     <div className="flex flex-col sm:flex-row gap-5 justify-center w-full mb-16">
-                        <form className="flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full p-1.5 pr-2 w-full max-w-md hover:bg-white/15 transition-colors group focus-within:bg-white/20 focus-within:border-white/30 shadow-lg shadow-black/10">
+                        <form onSubmit={handleJoinWaitlist} className="flex flex-col sm:flex-row items-stretch sm:items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-full p-2 sm:p-1.5 sm:pr-2 w-full max-w-md hover:bg-white/15 transition-colors group focus-within:bg-white/20 focus-within:border-white/30 shadow-lg shadow-black/10 gap-2 sm:gap-0">
                             <input 
+                                name="email"
                                 type="email" 
                                 placeholder="Enter your email..." 
-                                className="bg-transparent border-none text-white placeholder:text-blue-100/50 px-6 py-3 flex-1 outline-none text-sm font-medium w-full"
+                                required
+                                className="bg-transparent border-none text-white placeholder:text-blue-100/50 px-4 sm:px-6 py-2 sm:py-3 flex-1 outline-none text-sm font-medium w-full text-center sm:text-left"
                             />
-                            <button className="px-6 py-3 text-sm font-semibold text-white bg-white/10 border border-white/10 rounded-full hover:bg-white/20 transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm">
+                            <button type="submit" className="px-6 py-3 text-sm font-semibold text-white bg-white/10 border border-white/10 rounded-xl sm:rounded-full hover:bg-white/20 transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm w-full sm:w-auto">
                                 Join Waitlist
                             </button>
                         </form>
-                    
-                        {/* 
-                        <button className="px-8 py-4 text-sm font-semibold text-white bg-white/10 backdrop-blur-md border border-white/20 rounded-full hover:bg-white/20 transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2 group">
-                            <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
-                                 <Play size={10} fill="currentColor" className="ml-0.5 text-white"/>
-                            </div>
-                            see how it works
-                        </button>
-                         */}
                     </div>
                 </ScrollReveal>
             </div>
 
-            {/* Right Column: Testimonial (Visible on LG) */}
-            <div className="hidden lg:flex col-span-3 pt-20 justify-end lg:translate-x-12">
+            {/* Right Column: Testimonial */}
+            <div className="flex lg:flex col-span-12 lg:col-span-3 pt-0 lg:pt-20 justify-center lg:justify-end lg:translate-x-12">
                 <ScrollReveal delay={0.7} className="w-full max-w-[320px]">
                     <div className="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-3xl text-left relative overflow-hidden group cursor-default transition-colors hover:bg-white/15">
                         <div className="absolute top-0 left-0 right-0 h-0.5 bg-white/10">
@@ -188,23 +205,29 @@ export const Hero: React.FC = () => {
         </div>
         
         {/* Mobile Stats (Visible only on small screens) */}
-        <div className="lg:hidden grid grid-cols-3 gap-4 pb-12 text-center max-w-md mx-auto">
+        <div className="lg:hidden grid grid-cols-3 gap-4 pb-12 pt-12 text-center max-w-md mx-auto border-t border-white/5 mt-12">
              <div>
-                <div className="text-2xl font-serif text-white">1.2K+</div>
+                <div className="text-2xl font-serif text-white">41%</div>
+                <div className="text-[10px] text-blue-100/60 uppercase tracking-wider mt-1">Less Stress</div>
+             </div>
+             <div>
+                <div className="text-2xl font-serif text-white">10+</div>
                 <div className="text-[10px] text-blue-100/60 uppercase tracking-wider mt-1">Founders</div>
              </div>
              <div>
-                <div className="text-2xl font-serif text-white">40+</div>
-                <div className="text-[10px] text-blue-100/60 uppercase tracking-wider mt-1">Teams</div>
-             </div>
-             <div>
-                <div className="text-2xl font-serif text-white">76%</div>
-                <div className="text-[10px] text-blue-100/60 uppercase tracking-wider mt-1">Impact</div>
+                <div className="text-2xl font-serif text-white">65%</div>
+                <div className="text-[10px] text-blue-100/60 uppercase tracking-wider mt-1">Clarity</div>
              </div>
         </div>
 
         {/* Bottom Footer Text */}
-        <div className="absolute bottom-8 left-0 right-0 text-center">
+        <div className="absolute bottom-8 left-0 right-0 text-center hidden lg:block">
+             <p className="text-[10px] font-medium text-white/40 uppercase tracking-widest">
+                Created for clarity in thought leadership
+             </p>
+        </div>
+        
+        <div className="text-center lg:hidden pb-8">
              <p className="text-[10px] font-medium text-white/40 uppercase tracking-widest">
                 Created for clarity in thought leadership
              </p>
