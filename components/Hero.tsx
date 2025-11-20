@@ -6,17 +6,20 @@ const TESTIMONIALS = [
   {
     name: 'Elena Mora',
     role: 'Founder, Crescent Studio',
-    quote: "I didn't need another productivity tool, I needed calm to think and make decisions. Quillio gave me that pause button."
+    quote: "I didn't need another productivity tool, I needed calm to think and make decisions. Quillio gave me that pause button.",
+    avatar: '/elena.png'
   },
   {
     name: 'Marcus Lee',
     role: 'CEO, Northwind Labs',
-    quote: 'Quillio remembers the threads between my board updates and daily standups. It has become my quiet chief of staff.'
+    quote: 'Quillio remembers the threads between my board updates and daily standups. It has become my quiet chief of staff.',
+    avatar: '/marcus.png'
   },
   {
     name: 'Priya Nair',
     role: 'Product Lead, Lumen',
-    quote: 'It mirrors back the emotional patterns hiding in my notes. That perspective keeps our roadmap grounded in reality.'
+    quote: 'It mirrors back the emotional patterns hiding in my notes. That perspective keeps our roadmap grounded in reality.',
+    avatar: '/priya.png'
   }
 ];
 const TESTIMONIAL_DURATION = 8000;
@@ -138,9 +141,17 @@ export const Hero: React.FC = () => {
                             />
                         </div>
                         <div className="flex -space-x-3 mb-6 mt-3">
-                            <div className="w-10 h-10 rounded-full bg-blue-100 border-2 border-white/10" />
-                            <div className="w-10 h-10 rounded-full bg-indigo-200 border-2 border-white/10" />
-                            <div className="w-10 h-10 rounded-full bg-purple-200 border-2 border-white/10" />
+                            {TESTIMONIALS.map((testimonial, index) => (
+                                <div key={testimonial.name} className="w-10 h-10 rounded-full border-2 border-white/20 overflow-hidden bg-white/5">
+                                    <img 
+                                        src={testimonial.avatar} 
+                                        alt={testimonial.name}
+                                        className="w-full h-full object-cover"
+                                        loading={index === 0 ? 'eager' : 'lazy'}
+                                        decoding="async"
+                                    />
+                                </div>
+                            ))}
                         </div>
 
                         <div className="mb-4">
