@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollReveal } from './ui/ScrollReveal';
-import { Play, ArrowRight, Check, X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 
 const TESTIMONIALS = [
   {
@@ -23,10 +23,16 @@ const TESTIMONIALS = [
   }
 ];
 const TESTIMONIAL_DURATION = 8000;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const API_BASE_URL =
+  (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ??
+  '';
+const WAITLIST_ENDPOINT = `${API_BASE_URL}/api/waitlist`;
 
 export const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('Email sent!');
   const [notificationType, setNotificationType] = useState<'success' | 'error'>('success');
@@ -51,36 +57,86 @@ export const Hero: React.FC = () => {
 
   const handleJoinWaitlist = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (isSubmitting) return;
+
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const email = formData.get('email');
+    const email = (formData.get('email') as string | null)?.trim();
+    const website = formData.get('website'); // honeypot to filter bots
+
+    if (website) return;
+    if (!email || !EMAIL_REGEX.test(email)) {
+      setNotificationMessage('Please enter a valid email address.');
+      setNotificationType('error');
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 3000);
+      return;
+    }
+
+    const url = typeof window !== 'undefined' ? window.location.href : null;
+    const title = typeof document !== 'undefined' ? document.title : null;
+    const referrer = typeof document !== 'undefined' ? document.referrer : null;
+    const searchParams =
+      typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+
+    const utm = searchParams
+      ? {
+          source: searchParams.get('utm_source'),
+          medium: searchParams.get('utm_medium'),
+          campaign: searchParams.get('utm_campaign'),
+          term: searchParams.get('utm_term'),
+          content: searchParams.get('utm_content')
+        }
+      : undefined;
+
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 10000);
+
+    setIsSubmitting(true);
   
     try {
-        const res = await fetch('/api/waitlist', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email }),
-        });
-    
-        if (res.ok) {
-            form.reset();
-            setNotificationMessage('Email sent!');
-            setNotificationType('success');
-            setShowNotification(true);
-            setTimeout(() => setShowNotification(false), 3000);
-        } else {
-            setNotificationMessage('Something went wrong. Please try again.');
-            setNotificationType('error');
-            setShowNotification(true);
-            setTimeout(() => setShowNotification(false), 3000);
-        }
-    } catch (e) {
-        // For now, simulate success if API is not present
-        form.reset();
-        setNotificationMessage('Email sent!');
-        setNotificationType('success');
-        setShowNotification(true);
-        setTimeout(() => setShowNotification(false), 3000);
+      const res = await fetch(WAITLIST_ENDPOINT, {
+        method: 'POST',
+        signal: controller.signal,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          source: 'landing_hero',
+          pageUrl: url,
+          pageTitle: title,
+          referrer,
+          utm,
+          website // honeypot stays empty for humans
+        })
+      });
+
+      window.clearTimeout(timeout);
+
+      if (!res.ok) {
+        const error = await res.json().catch(() => ({}));
+        const message = error?.error || 'Something went wrong. Please try again.';
+        throw new Error(message);
+      }
+
+      form.reset();
+      setNotificationMessage('You are on the waitlist. We will be in touch soon.');
+      setNotificationType('success');
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 3200);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error && error.name === 'AbortError'
+          ? 'Network timeout. Please retry.'
+          : error instanceof Error
+            ? error.message
+            : 'Something went wrong. Please try again.';
+
+      setNotificationMessage(message);
+      setNotificationType('error');
+      setShowNotification(true);
+      setTimeout(() => setShowNotification(false), 3200);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -174,6 +230,18 @@ export const Hero: React.FC = () => {
                 <ScrollReveal delay={0.3}>
                     <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center w-full mb-8 sm:mb-12 lg:mb-16 px-2 sm:px-0">
                         <form onSubmit={handleJoinWaitlist} className="flex flex-col sm:flex-row items-stretch sm:items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-full p-2 sm:p-1.5 sm:pr-2 w-full max-w-md mx-auto hover:bg-white/15 transition-colors group focus-within:bg-white/20 focus-within:border-white/30 shadow-lg shadow-black/10 gap-2 sm:gap-0">
+                            <input
+                                type="text"
+                                name="website"
+                                tabIndex={-1}
+                                autoComplete="off"
+                                className="hidden"
+                            />
+                            <input
+                                type="hidden"
+                                name="source"
+                                value="landing_hero"
+                            />
                             <input 
                                 name="email"
                                 type="email" 
@@ -181,8 +249,12 @@ export const Hero: React.FC = () => {
                                 required
                                 className="bg-transparent border-none text-white placeholder:text-blue-100/50 px-4 sm:px-6 py-2 sm:py-3 flex-1 outline-none text-sm font-medium w-full text-center sm:text-left"
                             />
-                            <button type="submit" className="px-6 py-3 text-sm font-semibold text-white bg-white/10 border border-white/10 rounded-xl sm:rounded-full hover:bg-white/20 transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm w-full sm:w-auto">
-                                Join Waitlist
+                            <button 
+                                type="submit" 
+                                disabled={isSubmitting}
+                                className={`px-6 py-3 text-sm font-semibold text-white bg-white/10 border border-white/10 rounded-xl sm:rounded-full transition-all flex items-center justify-center gap-2 whitespace-nowrap shadow-sm w-full sm:w-auto ${isSubmitting ? 'opacity-60 cursor-not-allowed' : 'hover:bg-white/20'}`}
+                            >
+                                {isSubmitting ? 'Sending...' : 'Join Waitlist'}
                             </button>
                         </form>
                     </div>

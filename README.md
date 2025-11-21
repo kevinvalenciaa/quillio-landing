@@ -18,3 +18,7 @@ View your app in AI Studio: https://ai.studio/apps/drive/1D_6FAakPDaf--Gjz8_2mwH
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Waitlist endpoint
+
+The Join Waitlist form posts to `/api/waitlist` (serverless function). Configure Supabase + optional Slack/Resend and local dev tooling using the checklist in [WAITLIST_SETUP.md](WAITLIST_SETUP.md).
