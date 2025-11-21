@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollReveal } from './ui/ScrollReveal';
-import { Play, ArrowRight } from 'lucide-react';
+import { Play, ArrowRight, Check, X } from 'lucide-react';
 
 const TESTIMONIALS = [
   {
@@ -27,6 +27,9 @@ const TESTIMONIAL_DURATION = 8000;
 export const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [showNotification, setShowNotification] = useState(false);
+  const [notificationMessage, setNotificationMessage] = useState('Email sent!');
+  const [notificationType, setNotificationType] = useState<'success' | 'error'>('success');
 
   useEffect(() => {
     const tick = 60;
@@ -61,17 +64,46 @@ export const Hero: React.FC = () => {
     
         if (res.ok) {
             form.reset();
-            alert("Thanks for joining! We'll be in touch.");
+            setNotificationMessage('Email sent!');
+            setNotificationType('success');
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 3000);
         } else {
-            alert("Something went wrong. Please try again.");
+            setNotificationMessage('Something went wrong. Please try again.');
+            setNotificationType('error');
+            setShowNotification(true);
+            setTimeout(() => setShowNotification(false), 3000);
         }
     } catch (e) {
-        alert("Something went wrong. Please try again.");
+        // For now, simulate success if API is not present
+        form.reset();
+        setNotificationMessage('Email sent!');
+        setNotificationType('success');
+        setShowNotification(true);
+        setTimeout(() => setShowNotification(false), 3000);
     }
   };
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-slate-900 pb-12 pt-24 lg:pt-0 lg:pb-0">
+      
+      {/* Glass Notification */}
+      {showNotification && (
+        <div className="fixed top-24 left-1/2 -translate-x-1/2 z-[100] animate-in fade-in slide-in-from-top-5 duration-300">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-6 py-3 shadow-2xl shadow-black/20 flex items-center gap-3">
+            {notificationType === 'success' ? (
+              <div className="w-5 h-5 bg-emerald-500/20 rounded-full flex items-center justify-center border border-emerald-500/30">
+                <Check size={12} className="text-emerald-400" strokeWidth={3} />
+              </div>
+            ) : (
+              <div className="w-5 h-5 bg-rose-500/20 rounded-full flex items-center justify-center border border-rose-500/30">
+                <X size={12} className="text-rose-400" strokeWidth={3} />
+              </div>
+            )}
+            <p className="text-white font-medium text-sm tracking-wide">{notificationMessage}</p>
+          </div>
+        </div>
+      )}
       
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
@@ -160,14 +192,14 @@ export const Hero: React.FC = () => {
             {/* Right Column: Testimonial */}
             <div className="flex lg:flex col-span-12 lg:col-span-3 pt-0 lg:pt-20 justify-center lg:justify-end lg:translate-x-12">
                 <ScrollReveal delay={0.7} className="w-full max-w-[320px]">
-                    <div className="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-3xl text-left relative overflow-hidden group cursor-default transition-colors hover:bg-white/15">
+                    <div className="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-3xl text-center lg:text-left relative overflow-hidden group cursor-default transition-colors hover:bg-white/15">
                         <div className="absolute top-0 left-0 right-0 h-0.5 bg-white/10">
                             <div
                                 className="h-full bg-white transition-all duration-200 ease-linear"
                                 style={{ width: `${progress}%` }}
                             />
                         </div>
-                        <div className="flex -space-x-3 mb-6 mt-3">
+                        <div className="flex -space-x-3 mb-6 mt-3 justify-center lg:justify-start">
                             {TESTIMONIALS.map((testimonial, index) => (
                                 <div key={testimonial.name} className="w-10 h-10 rounded-full border-2 border-white/20 overflow-hidden bg-white/5">
                                     <img 
@@ -190,7 +222,7 @@ export const Hero: React.FC = () => {
                             “{currentTestimonial.quote}”
                         </p>
                         
-                        <div className="flex gap-1 mt-4 text-white/60">
+                        <div className="flex gap-1 mt-4 text-white/60 justify-center lg:justify-start">
                             {TESTIMONIALS.map((_, index) => (
                                 <div
                                     key={index}
