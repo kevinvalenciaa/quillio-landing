@@ -25,7 +25,7 @@ export const Navbar: React.FC = () => {
             <div className="text-white">
                 <Feather className="w-5 h-5" strokeWidth={2} />
             </div>
-            <span className="text-lg font-serif font-medium tracking-tight text-white">quillio</span>
+            <span className="text-lg font-serif font-medium tracking-tight text-white">Quillio</span>
         </div>
 
         {/* Desktop Links removed */}
