@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Feather } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -22,9 +21,11 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Logo */}
         <div className="flex items-center gap-2 cursor-pointer group opacity-90 hover:opacity-100 transition-opacity">
-            <div className="text-white">
-                <Feather className="w-5 h-5" strokeWidth={2} />
-            </div>
+            <img 
+                src="/white-quillio.png" 
+                alt="Quillio" 
+                className="w-5 h-5"
+            />
             <span className="text-lg font-serif font-medium tracking-tight text-white">Quillio</span>
         </div>
 
