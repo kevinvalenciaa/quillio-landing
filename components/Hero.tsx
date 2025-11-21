@@ -85,7 +85,7 @@ export const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-slate-900 pb-12 pt-24 lg:pt-0 lg:pb-0">
+    <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-slate-900 pb-8 pt-20 sm:pb-12 sm:pt-24 lg:pt-0 lg:pb-0">
       
       {/* Glass Notification */}
       {showNotification && (
@@ -124,8 +124,8 @@ export const Hero: React.FC = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1600px] h-[1600px] border border-white/5 rounded-full pointer-events-none z-0"></div>
 
       {/* Content Grid */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full lg:pt-0">
-        <div className="grid lg:grid-cols-12 gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full lg:pt-0 py-8 sm:py-0">
+        <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
             
             {/* Left Column: Stats (Visible on LG) */}
             <div className="hidden lg:flex flex-col gap-16 col-span-3 text-left pt-20">
@@ -150,30 +150,30 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* Center Column: Main Hero */}
-            <div className="col-span-12 lg:col-span-6 text-center flex flex-col items-center">
+            <div className="col-span-12 lg:col-span-6 text-center flex flex-col items-center w-full px-2 sm:px-0">
                  <ScrollReveal>
-                    <div className="inline-flex items-center gap-3 mb-8">
-                        <span className="h-px w-12 bg-white/20"></span>
-                        <span className="text-[11px] font-bold text-blue-100/80 uppercase tracking-[0.25em] font-sans">clarity between decisions</span>
-                        <span className="h-px w-12 bg-white/20"></span>
+                    <div className="inline-flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6 lg:mb-8">
+                        <span className="h-px w-8 sm:w-12 bg-white/20"></span>
+                        <span className="text-[10px] sm:text-[11px] font-bold text-blue-100/80 uppercase tracking-[0.25em] font-sans">clarity between decisions</span>
+                        <span className="h-px w-8 sm:w-12 bg-white/20"></span>
                     </div>
                 </ScrollReveal>
 
                 <ScrollReveal delay={0.1}>
-                    <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-medium text-white mb-8 leading-[1.1] tracking-tight text-balance drop-shadow-sm">
+                    <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-medium text-white mb-4 sm:mb-6 lg:mb-8 leading-[1.1] tracking-tight text-balance drop-shadow-sm px-2 sm:px-0">
                     Make better decisions with an AI that <span className="italic text-blue-200/90 font-serif">remembers</span> your life.
                     </h1>
                 </ScrollReveal>
 
                 <ScrollReveal delay={0.2}>
-                    <p className="text-lg sm:text-xl text-blue-100/80 max-w-2xl mx-auto mb-12 leading-relaxed font-light text-balance">
+                    <p className="text-base sm:text-lg md:text-xl text-blue-100/80 max-w-2xl mx-auto mb-6 sm:mb-8 lg:mb-12 leading-relaxed font-light text-balance px-2 sm:px-0">
                     Daily reflection, deep strategic canvases, and long-term pattern insights. Your private thinking partner for business, life, and relationships.
                     </p>
                 </ScrollReveal>
 
                 <ScrollReveal delay={0.3}>
-                    <div className="flex flex-col sm:flex-row gap-5 justify-center w-full mb-16">
-                        <form onSubmit={handleJoinWaitlist} className="flex flex-col sm:flex-row items-stretch sm:items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-full p-2 sm:p-1.5 sm:pr-2 w-full max-w-md hover:bg-white/15 transition-colors group focus-within:bg-white/20 focus-within:border-white/30 shadow-lg shadow-black/10 gap-2 sm:gap-0">
+                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center w-full mb-8 sm:mb-12 lg:mb-16 px-2 sm:px-0">
+                        <form onSubmit={handleJoinWaitlist} className="flex flex-col sm:flex-row items-stretch sm:items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl sm:rounded-full p-2 sm:p-1.5 sm:pr-2 w-full max-w-md mx-auto hover:bg-white/15 transition-colors group focus-within:bg-white/20 focus-within:border-white/30 shadow-lg shadow-black/10 gap-2 sm:gap-0">
                             <input 
                                 name="email"
                                 type="email" 
@@ -190,7 +190,7 @@ export const Hero: React.FC = () => {
             </div>
 
             {/* Right Column: Testimonial */}
-            <div className="flex lg:flex col-span-12 lg:col-span-3 pt-0 lg:pt-20 justify-center lg:justify-end lg:translate-x-12">
+            <div className="flex lg:flex col-span-12 lg:col-span-3 pt-4 sm:pt-6 lg:pt-20 justify-center lg:justify-end lg:translate-x-12 px-2 sm:px-0">
                 <ScrollReveal delay={0.7} className="w-full max-w-[320px]">
                     <div className="bg-white/10 backdrop-blur-md border border-white/10 p-6 rounded-3xl text-center lg:text-left relative overflow-hidden group cursor-default transition-colors hover:bg-white/15">
                         <div className="absolute top-0 left-0 right-0 h-0.5 bg-white/10">
@@ -237,7 +237,7 @@ export const Hero: React.FC = () => {
         </div>
         
         {/* Mobile Stats (Visible only on small screens) */}
-        <div className="lg:hidden grid grid-cols-3 gap-4 pb-12 pt-12 text-center max-w-md mx-auto border-t border-white/5 mt-12">
+        <div className="lg:hidden grid grid-cols-3 gap-3 sm:gap-4 pb-8 sm:pb-12 pt-8 sm:pt-12 text-center max-w-md mx-auto border-t border-white/5 mt-8 sm:mt-12 px-4 sm:px-0">
              <div>
                 <div className="text-2xl font-serif text-white">41%</div>
                 <div className="text-[10px] text-blue-100/60 uppercase tracking-wider mt-1">Less Stress</div>
@@ -259,7 +259,7 @@ export const Hero: React.FC = () => {
              </p>
         </div>
         
-        <div className="text-center lg:hidden pb-8">
+        <div className="text-center lg:hidden pb-4 sm:pb-8 pt-4 sm:pt-0">
              <p className="text-[10px] font-medium text-white/40 uppercase tracking-widest">
                 Created for clarity in thought leadership
              </p>
