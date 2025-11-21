@@ -247,7 +247,8 @@ export const Hero: React.FC = () => {
                                 type="email" 
                                 placeholder="Enter your email..." 
                                 required
-                                className="bg-transparent border-none text-white placeholder:text-blue-100/50 px-4 sm:px-6 py-2 sm:py-3 flex-1 outline-none text-sm font-medium w-full text-center sm:text-left"
+                                autoComplete="email"
+                                className="waitlist-input bg-transparent border-none text-white placeholder:text-blue-100/50 px-4 sm:px-6 py-2 sm:py-3 flex-1 outline-none text-sm font-medium w-full text-center sm:text-left"
                             />
                             <button 
                                 type="submit" 

@@ -47,6 +47,23 @@
       .no-scrollbar::-webkit-scrollbar {
         display: none;
       }
+
+      /* Prevent browser autofill styles from breaking the waitlist input */
+      .waitlist-input:-webkit-autofill,
+      .waitlist-input:-webkit-autofill:focus,
+      .waitlist-input:-webkit-autofill:hover {
+        -webkit-text-fill-color: #fff;
+        -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+        background-color: transparent !important;
+        transition: background-color 9999s ease-in-out 0s;
+        caret-color: #fff;
+      }
+      .waitlist-input:-moz-autofill {
+        box-shadow: 0 0 0px 1000px transparent inset;
+        background-color: transparent;
+        -moz-text-fill-color: #fff;
+        caret-color: #fff;
+      }
     </style>
     <script>
       tailwind.config = {
