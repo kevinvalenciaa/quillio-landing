@@ -24,10 +24,8 @@ const TESTIMONIALS = [
 ];
 const TESTIMONIAL_DURATION = 8000;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const API_BASE_URL =
-  (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') ??
-  '';
-const WAITLIST_ENDPOINT = `${API_BASE_URL}/api/waitlist`;
+// Vercel serverless function endpoint
+const WAITLIST_ENDPOINT = '/api/waitlist';
 
 export const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -89,12 +87,12 @@ export const Hero: React.FC = () => {
         }
       : undefined;
 
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 10000);
-
     setIsSubmitting(true);
   
     try {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 10000);
+
       const res = await fetch(WAITLIST_ENDPOINT, {
         method: 'POST',
         signal: controller.signal,
@@ -119,7 +117,7 @@ export const Hero: React.FC = () => {
       }
 
       form.reset();
-      setNotificationMessage('You are on the waitlist. We will be in touch soon.');
+      setNotificationMessage('You are on the waitlist!');
       setNotificationType('success');
       setShowNotification(true);
       setTimeout(() => setShowNotification(false), 3200);
