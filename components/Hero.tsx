@@ -221,7 +221,7 @@ export const Hero: React.FC = () => {
 
                 <ScrollReveal delay={0.2}>
                     <p className="text-base sm:text-lg md:text-xl text-blue-100/80 max-w-2xl mx-auto mb-6 sm:mb-8 lg:mb-12 leading-relaxed font-light text-balance px-2 sm:px-0">
-                    Daily reflection, deep strategic canvases, and long-term pattern insights. Your private thinking partner for business, life, and relationships.
+                    Quillio turns your daily brain dumps into one crystal clear weekly plan, then makes sure your calendar and tasks actually match it.
                     </p>
                 </ScrollReveal>
 
